@@ -14,7 +14,6 @@ The customer send booking request to book a hotel on a specific date and time an
 ## Table of Contents
 
 - [Installation](#installation)
-- [Usage](#usage)
 - [Features](#features)
 - [Technologies Used](#technologies-used)
 - [Screenshots](#screenshots)
@@ -60,13 +59,6 @@ python manage.py runserver
 ```
 
 8. Access the application in your web browser at <http://localhost:8000/>
-
-## Usage
-
-- Visit the home page to view an overview of Hall booking CMS.
-- Browse through the projects section to see details about my projects, including descriptions, technologies used, and live links (if applicable).
-- The skills section highlights the technologies and programming languages I'm proficient in.
-- Use the contact page to get in touch with me for potential collaboration or job opportunities.
 
 ## Features
 
