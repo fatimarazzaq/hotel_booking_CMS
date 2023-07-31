@@ -25,7 +25,9 @@ The customer send booking request to book a hotel on a specific date and time an
 
 1. Make sure you have Python and Django installed. If not, you can download Python from <https://www.python.org/> and install Django using pip:
 
-```pip install django```
+```
+pip install django
+```
 
 2. Clone the repository to your local machine:
 
