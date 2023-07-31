@@ -32,7 +32,7 @@ pip install django
 2. Clone the repository to your local machine:
 
 ```
-git clone <https://github.com/fatimarazzaq/hotel_booking_CMS.git>
+git clone https://github.com/fatimarazzaq/hotel_booking_CMS.git
 ```
 
 3. Navigate to the project directory:
