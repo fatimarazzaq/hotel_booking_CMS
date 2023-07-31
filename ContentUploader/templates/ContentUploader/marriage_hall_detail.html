@@ -1,0 +1,290 @@
+{% extends 'ContentUploader/base.html' %}
+{% block title %}
+Hall Detail Content
+{% endblock title %}
+{% load crispy_forms_tags %}
+{% block content %}
+{% load static %}
+
+<style>
+    .myImg {
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .myImg:hover {
+        opacity: 0.7;
+    }
+
+    /* The Modal (background) */
+    .modal {
+        display: none;
+        /* Hidden by default */
+        position: fixed;
+        /* Stay in place */
+        z-index: 1;
+        /* Sit on top */
+        padding-top: 100px;
+        /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%;
+        /* Full width */
+        height: 100%;
+        /* Full height */
+        overflow: auto;
+        /* Enable scroll if needed */
+        background-color: rgb(0, 0, 0);
+        /* Fallback color */
+        background-color: rgba(0, 0, 0, 0.9);
+        /* Black w/ opacity */
+    }
+
+    /* Modal Content (image) */
+    .modal-content {
+        margin: auto;
+        display: block;
+        width: 80%;
+        max-width: 700px;
+    }
+
+    /* Caption of Modal Image */
+    #caption {
+        margin: auto;
+        display: block;
+        width: 80%;
+        max-width: 700px;
+        text-align: center;
+        color: #ccc;
+        padding: 10px 0;
+        height: 150px;
+    }
+
+    /* Add Animation */
+    .modal-content,
+    #caption {
+        -webkit-animation-name: zoom;
+        -webkit-animation-duration: 0.6s;
+        animation-name: zoom;
+        animation-duration: 0.6s;
+    }
+
+    @-webkit-keyframes zoom {
+        from {
+            -webkit-transform: scale(0)
+        }
+
+        to {
+            -webkit-transform: scale(1)
+        }
+    }
+
+    @keyframes zoom {
+        from {
+            transform: scale(0)
+        }
+
+        to {
+            transform: scale(1)
+        }
+    }
+
+    /* The Close Button */
+    .close {
+        position: absolute;
+        top: 15px;
+        right: 35px;
+        color: #f1f1f1;
+        font-size: 40px;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: #bbb;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    /* 100% Image Width on Smaller Screens */
+    @media only screen and (max-width: 700px) {
+        .modal-content {
+            width: 100%;
+        }
+    }
+</style>
+
+
+{% if user.is_customer %}
+<div class="chat-anim-btn">
+    <a href="https://wa.me/{{ marriagehall.owner.phone_number }}" target="_blank" style="z-index:100;">
+        <img src="{% static 'ContentUploader/images/whatsapp.png' %}" alt="" style="width: 70px;">
+    </a>
+</div>
+    
+{% endif %}
+
+<div class="row my-5">
+    {% for video in marriagehall.hallvideos_set.all %}
+    <div class="col-md-6" style="position: relative;">
+        <video width="400" controls class="w-100" class="w-100">
+            <source src="{{video.video.url}}" type="video/mp4">
+            Your browser does not support HTML5 video.
+
+        </video>
+
+        {% if user.is_administrator %}
+        <form action="{% url 'hall-video-delete' %}" method='post' enctype="multipart/form-data"
+            style="position:absolute; top:-13px;right:-5px;">
+            {% csrf_token %}
+            <input type="hidden" value="{{ video.id }}" name='delvid'>
+            <button type="submit" style="border: none; background-color: rgba(255, 255, 255, 0);">
+                <i class="fas fa-times-circle" style="font-size: 25px; color: black;"></i>
+            </button>
+        </form>
+        {% endif %}
+    </div>
+    {% endfor %}
+    <div class="col-md-6">
+        <div class="row">
+
+            {% for image in marriagehall.hallimages_set.all %}
+            <div class="col-md-4 mb-4">
+
+                <img class="myImg" src="{{ image.image.url }}" alt="{{ image.image_alt }}"
+                    style="width:100%;max-width:300px">
+
+                {% if user.is_administrator %}
+                <form action="{% url 'hall-image-delete' %}" method="post" enctype="multipart/form-data"
+                    style="position:absolute; top:-15px;right:-7px;">
+                    {% csrf_token %}
+                    <input type="hidden" value="{{ image.id }}" name='delimage'>
+                    <button type="submit" style="border: none; background-color: rgba(255, 255, 255, 0);">
+                        <i class="fas fa-times-circle" style="font-size: 25px; color: black;"></i>
+                    </button>
+                </form>
+                {% endif %}
+            </div>
+
+
+            {% endfor %}
+        </div>
+
+
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+            <span class="close">&times;</span>
+            <img class="modal-content" id="img01">
+            <div id="caption"></div>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+
+
+<div class="container">
+
+    <a class="mr-2" href="#">Owner : {{ marriagehall.owner.user.username }}</a>
+
+    <div class="row">
+        <div class="col-md-8">
+            <h2 class='article-title'>{{ marriagehall.title }}</h2>
+            <!-- {{ post.title }} -->
+            <p class="article-content" style="font-size: 0.9rem;text-align: justify;">{{ marriagehall.description }}</p>
+        </div>
+
+
+        <div class="col-md-4">
+            {% if user.is_customer %}
+                
+            <div class="border p-4 mb-3">
+                <h3 class="text-center ">Set Booking</h3>
+                <form action="{% url 'hall-booking' marriagehall.id %}" method="post">
+                    {% csrf_token %}
+                    <label for="id_check_in">
+                        Check In
+                    </label>
+                    <input type="datetime-local" name="checkin" id="id_check_in" class="form-control">
+                    <label for="id_check_out">
+                        Check Out
+                    </label>
+                    <input type="datetime-local" name="checkout" id="id_check_out" class="form-control">
+
+                    <button type="submit" class="btn btn-primary my-4 btn-block">Book Now</button>
+
+                </form>
+            </div>
+            {% endif %}
+        </div>
+
+    </div>
+</div>
+<div class="container">
+
+
+    {% if user.is_administrator %}
+    <div class="my-4">
+        <form action="{% url 'upload-content' marriagehall.id %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="my-2">
+                <label for="images">Upload Images</label><br>
+                <input type="file" name="images" id="images" multiple accept="image/*"><br>
+            </div>
+            <div class="my-2">
+                <label for="videos">Upload Videos</label><br>
+                <input type="file" name="videos" id="videos" multiple accept="video/*"><br>
+            </div>
+            <button type="submit" class="btn btn-primary my-2">Save Media</button>
+        </form>
+
+        <hr>
+    </div>
+    {% endif %}
+    {% if user.is_administrator %}
+    <div>
+        <a class="btn btn-secondary btn-sm my-1 link-light my-4"
+            href="{% url 'hall-update' marriagehall.id %}">Update</a>
+
+    </div>
+
+    {% endif %}
+</div>
+
+
+<script>
+    // Get the modal
+    var modal = document.getElementById("myModal");
+
+    // Get the image and insert it inside the modal - use its "alt" text as a caption
+    var img = document.getElementsByClassName("myImg");
+    var modalImg = document.getElementById("img01");
+    var captionText = document.getElementById("caption");
+    for (let index = 0; index < img.length; index++) {
+        const element = img[index];
+        element.onclick = function () {
+            modal.style.display = "block";
+            modalImg.src = this.src;
+            captionText.innerHTML = this.alt;
+        }
+    }
+
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
+</script>
+
+
+
+
+{% endblock content %}

@@ -1,0 +1,86 @@
+{% extends 'ContentUploader/base.html' %}
+{% block title %}
+Dashboard
+{% endblock title %}
+{% load static %}
+{% block withoutcontainer %}
+
+<style>
+    .hall>p {
+        font-size: 0.9rem;
+        padding-right: 20px;
+    }
+</style>
+<div class="row">
+    <div class="col-md-2 sidebar">
+        <div class="">
+            <ul class='dashul'>
+                <li><span><i class="fa fa-home" aria-hidden="true"></i></span><a
+                    href="{% url 'home' %}">Home</a></li>
+                <li><span><i class="fa fa-tachometer-slow" aria-hidden="true"></i></span><a
+                        href="#dashboard">Dashboard</a></li>
+                <li><span><i class="fa fa-user" aria-hidden="true"></i></span><a href="#mybookings">My Bookings</a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-10 right_side_bar pt-4">
+
+        <div id="dashboard">
+            <p class="h3 py-1">Dashboard</p>
+        </div>
+
+
+        <!-- All my marriage halls -->
+        <div class="text-center" style="background-color:var(--bs-gray-500);color: var(--bs-gray-100);" id='allhalls'>
+            <p class="h3 text-center border py-1">My Event Bookings</p>
+        </div>
+
+        {% if all_cus_bookings %}
+        <table class="table table-responsive">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Marriage Hall</th>
+                    <th scope="col">Starting from</th>
+                    <th scope="col">Ending at</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {% for booking in all_cus_bookings %}
+                <tr>
+                    <th scope="row">{{forloop.counter}}</th>
+                    <td>{{booking.marriagehall}}</td>
+                    <td>{{booking.check_in}}</td>
+                    <td>{{booking.check_out}}</td>
+                </tr>
+                {% endfor %}
+
+
+
+            </tbody>
+        </table>
+        {% else %}
+        <div class="w-100" style="display: flex; justify-content: center; align-items: center;">
+
+            <div class="p-5 text-center border my-5"
+                style="border-radius:20px;width:400px;height:250px;background-color:white;display: flex; flex-direction: column;justify-content: center; align-items: center;">
+                <div>
+                    <h3>You don't have any bookings Yet. Search your favourite marriage hall to book.</h3>
+                </div>
+                <a href="{% url 'home' %}" class="btn btn-block btn-primary">Search Now</a>
+            </div>
+        </div>
+        {% endif %}
+
+
+    </div>
+
+
+
+</div>
+
+
+{% endblock withoutcontainer %}

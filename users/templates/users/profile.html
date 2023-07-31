@@ -1,0 +1,48 @@
+{% extends 'ContentUploader/base.html' %}
+{% block title %}
+Profile
+{% endblock title %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block withoutcontainer %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6 my-5">
+            <img src="{{ user.image.url }}" alt="" style="width: 150px; height:150px; border-radius: 50%;object-fit: cover;">   
+            <div class="my-2">
+                <h4>{{ user.username }}</h4>
+                <h4>{{ user.email }}</h4>
+            </div>
+
+            <form action="" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="my-3">{{ i_form|crispy }}</div>
+
+                <div class="form-group">
+                    <button type="submit" class='btn btn-outline-primary my-3'>Update</button>
+                </div>
+            </form>
+
+            <a href="{% url 'logout' %}" class="btn btn-danger">Logout</a>
+
+
+            
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</div>
+
+
+{% endblock withoutcontainer %}
+{% block script %}
+
+
+
+<script>
+
+
+</script>
+
+{% endblock script %}

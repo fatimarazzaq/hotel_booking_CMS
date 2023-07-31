@@ -1,0 +1,240 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+    integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+
+  <!-- bar -->
+  <link rel="stylesheet" href="https://unpkg.com/simplebar@latest/dist/simplebar.css" />
+
+
+  <link rel="stylesheet" href="{% static 'ContentUploader/css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'ContentUploader/css/styles.css' %}">
+  <!-- Option 2: Separate Popper and Bootstrap JS -->
+
+
+  <!-- cropper css -->
+  <link rel="stylesheet" href="https://fengyuanchen.github.io/cropperjs/css/cropper.css" />
+
+  <title>{% block title %}
+
+    {% endblock title %}</title>
+  <style>
+    .dropprofile>button {
+      border: none;
+      background-color: rgba(255, 235, 205, 0);
+    }
+  </style>
+</head>
+
+<body onload="myFunction()">
+  <div id="loader"></div>
+  <div id="main-page" style="display: none;" class="animate-bottom">
+    <section class="header border-bottom">
+      <div class="container">
+        <div class="nav flex">
+          <div class="flex">
+            <a href="{%  url 'home' %}" class="logo"><span>Mannat</span>.pk</a>
+          </div>
+          <div class="flex">
+            <div class='mynav'>
+
+              {% if user.is_anonymous %}
+              <p><a href="{% url 'customer_register' %}" id="create_cust">Sign Up</a></p>
+              {% endif %}
+
+              {% if user.is_customer %}
+              <p><a href="{% url 'customer_dashboard' %}" id="cust_dash">Dashboard</a></p>
+              {% endif %}
+
+
+
+              {% if user.is_admin %}
+              <p><a href="{% url 'admin_dashboard' %}" id="admin_dash">Dashboard</a></p>
+              {% endif %}
+
+
+
+              {% if user.is_administrator %}
+              <p><a href="{% url 'administrator_dashboard' %}" id="administrator_dash">Dashboard</a></p>
+              {% endif %}
+
+
+
+              {% if user.is_hall_manager %}
+              <p><a href="{% url 'hall_dashboard' %}" id="hmanager_dash">Dashboard</a></p>
+              {% endif %}
+
+
+
+              {% if not user.is_authenticated %}
+
+              <p><a href="{% url 'login' %}" id="login">Login</a></p>
+              {% endif %}
+              <p><a href="#" id="about">About</a></p>
+              <p><a href="#" id="contact">Contact</a></p>
+
+            </div>
+          </div>
+          <div class="account flex">
+            <div class="acc-desc">
+              <div class="lines">
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+              </div>
+              <div class="person">
+                <a href="{% url 'profile' %}">
+                  {% if user.is_authenticated %}
+                      <img src="{{ user.image.url }}" alt="{{ user.username }}" class="myuser">
+                  {% else %}
+                    
+                  <i class="fa fa-user-circle user" aria-hidden="true"></i>
+                  {% endif %}
+                </a>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+
+
+    {% if messages %}
+    <section class="messages my-4 text-center w-100" style="z-index:100;position: absolute;top:30px;left: auto;right: auto;">
+      <div class="row">
+        <div class="col-md-2">
+
+        </div>
+        {% for message in messages %}
+          <div class="col-md-8 alert alert-{{ message.tags }}" role="alert">
+            <p>{{ message }}</p>
+          </div>
+        {% endfor %}
+        <div class="col-md-2"></div>
+      </div>
+
+    </section>
+    {% endif %}
+    
+
+    <!-- chat -->
+
+
+    {% block withoutcontainer %}
+
+    {% endblock withoutcontainer %}
+    <div class="container">
+
+
+      {% block content %}
+
+      {% endblock content %}
+    </div>
+
+
+
+    <!-- footer -->
+
+    <section class="footer pt-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+           <p class="pb-1" id="near_me" style="cursor: pointer;">Marriage Halls near me</p>
+            <a target="_blank" href="{% url 'home' %}?location=Lahore" class="style-a"><p class="pb-1">Marriage Halls in Lahore</a></p>
+            <a target="_blank" href="{% url 'home' %}?location=Faisalabad" class="style-a"><p class="pb-1">Marriage Halls in Faisalabad</a></p>
+            <a target="_blank" href="{% url 'home' %}?location=Rawalpindi" class="style-a"><p class="pb-1">Marriage Halls in Rawalpindi</a></p>
+            <a target="_blank" href="{% url 'home' %}?location=Multan" class="style-a"><p class="pb-1">Marriage Halls in Multan</a></p>
+            <a target="_blank" href="{% url 'home' %}?location=Gujranwala" class="style-a"><p class="pb-1">Marriage Halls in Gujranwala</a></p>
+            <a target="_blank" href="{% url 'home' %}?location=Sargodha" class="style-a"><p class="pb-1">Marriage Halls in Sargodha</a></p>
+            
+          </div>
+          <div class="col-md-4">
+            <a target="_blank" href="{% url 'home' %}?location=Karachi" class="style-a"><p class="pb-1">Marriage Halls in Karachi</a></p>
+            <a target="_blank" href="{% url 'home' %}?location=Hyderabad" class="style-a"><p class="pb-1">Marriage Halls in Hyderabad</a></p>
+            <a target="_blank" href="{% url 'home' %}?location=Sukkur" class="style-a"><p class="pb-1">Marriage Halls in Sukkur</a></p>
+            <a target="_blank" href="{% url 'home' %}?location=Larkana" class="style-a"><p class="pb-1">Marriage Halls in Larkana</a></p>
+            <a target="_blank" href="{% url 'home' %}?location=Mirpur Khas" class="style-a"><p class="pb-1">Marriage Halls in	Mirpur Khas</a></p>
+            <a target="_blank" href="{% url 'home' %}?location=Nawabshah" class="style-a"><p class="pb-1">Marriage Halls in Nawabshah</a></p>
+            <a target="_blank" href="{% url 'home' %}?location=Jacobabad" class="style-a"><p class="pb-1">Marriage Halls in Jacobabad</a></p>
+            
+          </div>
+          <div class="col-md-4">
+            <a target="_blank" href="{% url 'home' %}?location=Sheikhupura" class="style-a"><p class="pb-1">Marriage Halls in Sheikhupura</a></p>
+            <a target="_blank" href="{% url 'home' %}?location=Gujrat" class="style-a"><p class="pb-1">Marriage Halls in Gujrat</a></p>
+            <a target="_blank" href="{% url 'home' %}?location=Kasur" class="style-a"><p class="pb-1">Marriage Halls in Kasur</a></p>
+            <a target="_blank" href="{% url 'home' %}?location=Muridke" class="style-a"><p class="pb-1">Marriage Halls in Muridke</a></p>
+            <a target="_blank" href="{% url 'home' %}?location=Khairpur" class="style-a"><p class="pb-1">Marriage Halls in Khairpur</a></p>
+            <a target="_blank" href="{% url 'home' %}?location=Rahim Yar Khan" class="style-a"><p class="pb-1">Marriage Halls in Rahim Yar Khan</a></p>
+            <a target="_blank" href="{% url 'home' %}?location=Sahiwal" class="style-a"><p class="pb-1">Marriage Halls in Sahiwal</a></p>
+          </div>
+        </div>
+        
+            <div class="flex my-3" style="justify-content: center;">
+              <i class="fab fa-facebook facebok px-2" style="font-size: 25px;"></i>
+
+              <i class="fab fa-twitter twiter px-2" style="font-size: 25px;"></i>
+
+              <i class="fab fa-instagram insta px-2" style="font-size: 25px;"></i>
+
+              <i class="fab fa-youtube yout px-2" style="font-size: 25px;"></i>
+
+            </div>
+          
+      </div>
+      <div class="footer-bootom  py-3 pt-4 flex" style="justify-content: center;">
+        <p>&copy;Copyright Mannat.pk 2021</p>
+      </div>
+    </section>
+
+
+    
+
+  </div>
+
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+
+
+
+  <!-- jquery -->
+  
+
+  <script src="{% static 'ContentUploader/js/script.js' %}"></script>
+  <script src="{% static 'ContentUploader/js/scripts.js' %}"></script>
+  
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+  <!-- cropper -->
+  <script src="https://fengyuanchen.github.io/cropperjs/js/cropper.js"></script>
+
+
+  {% block script %}
+    
+  {% endblock script %}
+
+</body>
+
+</html>

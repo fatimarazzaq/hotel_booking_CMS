@@ -1,0 +1,28 @@
+{% extends 'ContentUploader/base.html' %}
+{% block title %}
+Login
+{% endblock title %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="my-5">
+    <form action="" method="POST">
+        {% csrf_token %}
+        <fieldset>
+            <legend class='border-bottom mb-4 pb-3'>Login</legend>
+    
+            {{ form|crispy }}
+            
+        </fieldset>
+        <div class="form-group">
+            
+            <button type="submit" class='btn btn-outline-primary my-3'>Sign In</button><br>
+            <small><a href="{% url 'password_reset' %}">Reset Password</a></small><br>
+        
+            
+        </div>
+    </form>
+
+</div>
+
+{% endblock content %}

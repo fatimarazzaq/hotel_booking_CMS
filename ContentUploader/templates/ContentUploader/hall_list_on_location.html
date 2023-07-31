@@ -1,0 +1,45 @@
+{% extends 'ContentUploader/base.html' %}
+
+{% block title %}
+Halls on particular location
+{% endblock title %}
+{% load static %}
+{% block content %}
+
+<!-- Searched -->
+<div class="mt-5 mx-2">
+    <p class="h5">Location : {{location}}</p>
+</div>
+<section class="searched-items py-5">
+    <div class="container">
+        {% for hall in all_hall_on_location %}
+
+        <div class="row mb-4" style="display: flex;align-items: center;">
+            <div class="col-md-5 col-sm-5 p-3">
+                <a href="{% url 'hall-detail' hall.id %}">
+                    <img src="{{hall.hallimages_set.first.image.url}}" class="w-100" alt=""
+                        style="border-radius: 20px;">
+                </a>
+            </div>
+            <div class="col-md-7 col-sm-7 px-0 p-5 search-explain">
+                <p>Entire guest suite in Lomita</p>
+                <a href="{% url 'hall-detail' hall.id %}">
+                    <h5>{{hall.title}}</h5>
+                </a>
+                <div style="width: 50px; height: 1px ; background-color: black;" class="my-3"></div>
+                <p>400 Guests</p>
+                <p>{{hall.description|truncatechars:100}}</p>
+
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+
+
+
+
+
+
+{% endblock content %}

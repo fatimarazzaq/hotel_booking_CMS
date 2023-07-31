@@ -1,0 +1,215 @@
+{% extends 'ContentUploader/base.html' %}
+{% block title %}
+Dashboard
+{% endblock title %}
+{% load static %}
+{% block withoutcontainer %}
+
+
+<div class="row">
+    <div class="col-md-2 sidebar">
+        <div class="">
+            <ul class='dashul'>
+                <li><span><i class="fa fa-tachometer-slow" aria-hidden="true"></i></span><a
+                        href="#dashboard">Dashboard</a></li>
+                <li><span><i class="fa fa-user" aria-hidden="true"></i></span><a
+                        href="#administrator">Administrators</a></li>
+                <li><span><i class="fa fa-user" aria-hidden="true"></i></span><a href="#hall-manager">Hall Managers</a>
+                </li>
+                <li><span><i class="fa fa-list-ul" aria-hidden="true"></i></span><a href="#all-bookings">Bookings</a>
+                </li>
+                <li><span><i class="fa fa-hotel" aria-hidden="true"></i></span><a href="#all-halls">Halls</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-10 right_side_bar pt-4 " id='dashboard'>
+        <p class="h1 mb-5">Dashboard</p>
+
+        <div class="row">
+            <div class="col-md-7 mb-5">
+                <a href="{% url 'administrator_register' %}" class="btn btn-primary btn-sm">Create Administrator</a>
+                <a href="{% url 'hall_register' %}" class="btn btn-danger btn-sm">Create Hall Manager</a>
+            </div>
+        </div>
+
+
+
+        <div class="administrator-table tables" id="administrator">
+            <p class="h3 text-center border py-1">All Administrators</p>
+            <table class="table">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">name</th>
+                        <th scope="col">email</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for dministrat in all_administrators %}
+
+                    <tr>
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td>{{dministrat.user.username}}</td>
+                        <td>{{ dministrat.user.email }}</td>
+
+                        <td>
+                                <a href="{% url 'deleted_by_admin' 'administrator' dministrat.user.id %}" class="btn btn-primary btn-sm">Delete</a>
+                  
+                        </td>
+
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+
+
+
+
+        <!-- hall manager table -->
+        <div class="hall-manager-table tables" id="hall-manager">
+            <p class="h3 text-center border py-1">All Hall Manager</p>
+            <table class="table table-responsive">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Phone</th>
+                        <th scope="col">Hall Name</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for manager in all_hall_managers %}
+                    <tr>
+                        <th scope="row">{{forloop.counter}}</th>
+                        <td>{{ manager.user.username }}</td>
+                        <td>{{ manager.user.email }}</td>
+                        <td>{{ manager.phone_number }}</td>
+                        {% if manager.marriagehall_set.all %}
+                            {% for hall in manager.marriagehall_set.all %}
+                                <tr class="ml-4">
+                                    <th scope="row">{{forloop.counter}}</th>
+                                    <td>{{ hall.title }}</td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <td>.....</td>
+                        {% endif %}
+                    <td><a href="{% url 'deleted_by_admin' 'hallmanager' manager.user.id %}" class="btn btn-sm btn-primary">Delete</a></td>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+
+        <br>
+        <br>
+        <br>
+        <br>
+
+
+
+
+
+
+        <!-- All Bookings Table -->
+        <div class="bookings-table tables" id="all-bookings">
+            <p class="h3 text-center border py-1">All Bookings</p>
+            <table class="table">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Hall Name</th>
+                        <th scope="col">Check-in</th>
+                        <th scope="col">Check-out</th>
+                        <th scope="col">Booked On</th>
+                        <th scope="col">Hall Owner</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for booking in all_bookings %}
+
+                    <tr>
+                        <th scope="row">{{forloop.counter}}</th>
+                        <td>{{booking.marriagehall.title}}</td>
+                        <td>{{booking.check_in}}</td>
+                        <td>{{booking.check_out}}</td>
+                        <td>{{booking.booked_on}}</td>
+                        <td>{{ booking.marriagehall.owner.user.username }}</td>
+                        <td><a href="{% url 'deleted_by_admin' 'booking' booking.id %}" class="btn btn-sm btn-danger">Delete</a></td>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+
+        <br>
+        <br>
+        <br>
+        <br>
+
+
+
+
+
+
+        <!-- All Halls Table -->
+        <div class="hall-table tables" id="all-halls">
+            <p class="h3 text-center border py-1">All Marriage Halls</p>
+            <table class="table">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Hall-name</th>
+                        <th scope="col">Hall-owner</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for myhall in all_marriage_halls %}
+                    <tr>
+                        <th scope="row">{{forloop.counter}}</th>
+                        <td><a href="{% url 'hall-detail' myhall.pk %}" target="_blank">{{ myhall.title }}</a></td>
+                        <td>{{ myhall.owner.user.username }}</td>
+                        <td><a href="{% url 'deleted_by_admin' 'marHall' myhall.id %}" class="btn btn-sm btn-danger">Delete</a></td>
+
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+
+
+        <br>
+        <br>
+        <br>
+        <br>
+
+
+
+
+
+
+    </div>
+</div>
+
+
+
+
+<script>
+
+</script>
+
+{% endblock withoutcontainer %}

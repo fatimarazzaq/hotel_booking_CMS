@@ -1,0 +1,112 @@
+{% extends 'ContentUploader/base.html' %}
+{% block title %}
+Dashboard
+{% endblock title %}
+{% load static %}
+{% block withoutcontainer %}
+
+<style>
+    .hall>p {
+        font-size: 0.9rem;
+        padding-right: 20px;
+    }
+</style>
+
+<div class="create_c_and_b">
+    <a href="{% url 'set_custom_booking' manager.id  %}" target="_blank" style="z-index:100;">
+        <img src="{% static 'ContentUploader/images/plus_icon.png' %}" alt="set custom booking" style="width: 50px;">
+    </a>
+</div>
+<div class="row">
+    <div class="col-md-2 sidebar">
+        <div class="">
+            <ul class='dashul'>
+                <li><span><i class="fa fa-home" aria-hidden="true"></i></span><a href="{% url 'home' %}">Home</a></li>
+                <li><span><i class="fa fa-tachometer-slow" aria-hidden="true"></i></span><a
+                        href="#dashboard">Dashboard</a></li>
+                <li><span><i class="fa fa-hotel" aria-hidden="true"></i></span><a href="#allhalls">My Halls</a></li>
+                <li><span><i class="fa fa-calendar-times" aria-hidden="true"></i></span><a href="#mybookings">My
+                        Bookings</a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-10 right_side_bar pt-4">
+
+        <div id="dashboard">
+            <p class="h3 py-1">Dashboard</p>
+        </div>
+
+
+        <!-- All my marriage halls -->
+        <div class="text-center" style="background-color:var(--light-blue);color: white;" id='allhalls'>
+            <p class="h3 text-center border py-1">My Marriage Halls</p>
+        </div>
+        <table class="table table-responsive">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">No. of Bookings</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {% for hall in a_halls_fcu %}
+                <tr>
+                    <th scope="row">{{forloop.counter}}</th>
+                    <td>{{hall.title}}</td>
+
+                    <td>{{hall.booking_set.all.count}}</td>
+                </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+
+
+
+        <!-- All my bookings -->
+        <div class="text-center mt-5" style="background-color:var(--light-blue);color: white;"
+            id='mybookings'>
+            <p class="h3 text-center border py-1">Booking Details</p>
+        </div>
+        <table class="table table-responsive">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Marriage hall</th>
+                    <th scope="col">Starting From</th>
+                    <th scope="col">Ending At</th>
+                    <th scope="col">Customer</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for hall in a_halls_fcu %}
+                {% for booking in hall.booking_set.all %}
+
+                <tr>
+                    <th scope="row">{{forloop.counter}}</th>
+                    <td>{{booking.marriagehall.title}}</td>
+                    <td>{{booking.check_in}}</td>
+                    <td>{{booking.check_out}}</td>
+                    <td>{{booking.customer.user.username}}</td>
+                </tr>
+                {% endfor %}
+                {% endfor %}
+
+            </tbody>
+        </table>
+
+
+
+
+    </div>
+
+
+
+</div>
+
+
+{% endblock withoutcontainer %}

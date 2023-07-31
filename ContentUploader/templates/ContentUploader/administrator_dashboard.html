@@ -1,0 +1,73 @@
+{% extends 'ContentUploader/base.html' %}
+{% block title %}
+Dashboard
+{% endblock title %}
+{% load static %}
+{% block withoutcontainer %}
+
+<style>
+    .hall>p {
+        font-size: 0.9rem;
+        padding-right: 20px;
+    }
+</style>
+<div class="row">
+    <div class="col-md-2 sidebar">
+        <div class="">
+            <ul class='dashul'>
+                <li><span><i class="fa fa-home" aria-hidden="true"></i></span><a
+                    href="{% url 'home' %}">Home</a></li>
+                <li><span><i class="fa fa-tachometer-slow" aria-hidden="true"></i></span><a
+                        href="#dashboard">Dashboard</a></li>
+                <li><span><i class="fa fa-user" aria-hidden="true"></i></span><a href="#allhalls">All Halls</a></li>
+                <li><span><i class="fa fa-user" aria-hidden="true"></i></span><a href="#uploadnew">Upload New Hall</a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-10 right_side_bar pt-4">
+
+        <div id="dashboard">
+            <p class="h3 py-1">Dashboard</p>
+        </div>
+        <div class="text-center" style="background-color:var(--bs-gray-500);color: var(--bs-gray-100);" id='allhalls'>
+            <p class="h3 text-center border py-1">All Marriage Halls </p>
+        </div>
+
+
+        <div class="mt-5">
+            {% for hall in all_halls %}
+            <div class="ml-4 mb-3 hall">
+                <a href="{% url 'hall-detail' hall.pk %}">
+                    <p class="h4">{{hall.title}}</p>
+                </a>
+                <p>{{hall.description}}</p>
+
+            </div>
+            {% endfor %}
+        </div>
+
+        <div id="uploadnew" class="text-center mt-5" style="background-color:var(--bs-gray-500);color: var(--bs-gray-100);">
+            <p class="h3 text-center border py-1">Upload New Hall Content</p>
+        </div>
+
+        <a href="{% url 'create-hall' %}" class="btn btn-primary my-2" target="_blank">
+            Upload Content
+        </a>
+        <ul class="list-group my-3">
+            <p class="h5">Hall-Profile with no content uploaded yet......</p>
+            {% for profile in profile_with_no_hall %}
+
+            <li class="list-group-item">{{ profile }}</li>
+            {% endfor %}
+        </ul>
+
+    </div>
+
+
+
+</div>
+
+
+{% endblock withoutcontainer %}

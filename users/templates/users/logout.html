@@ -1,0 +1,15 @@
+{% extends 'ContentUploader/base.html' %}
+{% block title %}
+Logout
+{% endblock title %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="my-5 border p-5">
+    <h2>You have been Logged out</h2>
+    <div class="border-top my-3">
+        <small><a href="{% url 'login' %}">Login Again</a> </small>
+    </div>
+</div>
+
+{% endblock content %}

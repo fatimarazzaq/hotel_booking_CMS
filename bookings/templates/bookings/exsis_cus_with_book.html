@@ -1,0 +1,96 @@
+{% extends 'ContentUploader/base.html' %}
+{% block title %}
+Exsisting Customer Booking
+{% endblock title %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="my-5">
+    <h2 class="text-center my-4">Set Custom Booking for Exsisting Customer</h2>
+    <p class="text-center">Customer not Found ?  <a href="{% url 'set_custom_booking_with_ncustomer' managerID %}">Click Here</a> </p>
+
+    <form action="" method="post" id="cust_form" autocomplete="off">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-6 border-left">
+                <div class="p-3">
+                    <legend class="border-bottom">Exsisting Customer</legend>
+                    {{ e_cust_form|crispy }}
+                    <small id="explain_error"></small>
+                </div>
+                <div class="p-3">
+                    <legend class="border-bottom">Set Booking</legend>
+                    <label for="id_check_in">
+                        Check In
+                    </label>
+                    <input type="datetime-local" name="checkin" id="id_check_in" class="form-control" required>
+                    <label for="id_check_out" class="mt-3">
+                        Check Out
+                    </label>
+                    <input type="datetime-local" name="checkout" id="id_check_out" class="form-control" required>
+
+                    <!-- all_halls -->
+
+                    <label for="marriage_hall" class="mt-3">
+                        Select Marriage Hall
+                    </label>
+                    <select id="marriage_hall" name="marriage_hall" required class="form-select form-select-sm"
+                        aria-label=".form-select-sm example">
+                        {% for hall in myhalls %}
+
+                        <option value="{{hall.id}}">{{ hall.title }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit" class="btn btn-primary my-5 btn-lg btn-block">Book Now</button>
+
+                </div>
+            </div>
+
+        </div>
+
+    </form>
+</div>
+
+
+
+
+
+
+{% endblock content %}
+
+
+{% block script %}
+
+<script>
+
+    var error = $("#explain_error")
+    $(document).ready(function(){
+        $("#id_username").keyup(function () {
+            var username = $("#id_username");
+            username.val(username.val().toLowerCase())
+            let csr = $("input[name=csrfmiddlewaretoken").val();
+            var mydata= { 
+                musername:username.val(),
+                csrfmiddlewaretoken:csr,
+            }
+            $.ajax({
+                url : "{% url 'check_customer_user' %}",
+                method : 'POST',
+                data : mydata,
+                success : function(data){
+                    var loadedData= (data)
+                    if(loadedData.status){
+                        error.text("User found !")
+                        error.css("color",'green')
+                    }else{
+                        error.text("User not found")
+                        error.css("color",'red')
+                    }
+                }
+            })
+        })
+    })
+
+</script>
+
+{% endblock script %}

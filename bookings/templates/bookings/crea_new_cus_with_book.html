@@ -1,0 +1,101 @@
+{% extends 'ContentUploader/base.html' %}
+{% block title %}
+New Customer Booking
+{% endblock title %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="my-5">
+    <h2 class="text-center my-4">Set Custom Booking for New Customer</h2>
+    <p class="text-center">Customer Already Exsist ? <a href="{% url 'set_custom_booking_with_ecustomer' managerID %}">Click Here</a> </p>
+    <form action="" method="post" id="cust_form" autocomplete="off">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-6 border-right">
+                <div class="p-3">
+                    <legend class="border-bottom">Customer Registration</legend>
+                    {{ c_form|crispy }}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="p-3">
+                    <legend class="border-bottom">Set Booking</legend>
+                    <label for="id_check_in">
+                        Check In
+                    </label>
+                    <input type="datetime-local" name="checkin" id="id_check_in" class="form-control" required>
+                    <label for="id_check_out" class="mt-3">
+                        Check Out
+                    </label>
+                    <input type="datetime-local" name="checkout" id="id_check_out" class="form-control" required>
+
+                    <!-- all_halls -->
+                    
+                    <label for="marriage_hall" class="mt-3">
+                        Select Marriage Hall
+                    </label>
+                      <select id="marriage_hall" name="marriage_hall" required class="form-select form-select-sm" aria-label=".form-select-sm example">
+                        {% for hall in myhalls %}
+                            
+                        <option value="{{hall.id}}">{{ hall.title }}</option>
+                        {% endfor %}
+                      </select>
+                    <button type="submit" class="btn btn-primary my-5 btn-lg btn-block">Book Now</button>
+                
+                </div>
+
+                <!-- input -->
+            </div>
+        </div>
+
+    </form>
+    
+<br>
+    
+</div>
+
+{% endblock content %}
+
+
+{% block script %}
+<script>
+    var p = document.createElement("p")
+    p.setAttribute("id","usernameValidation")
+    $('#id_username').after(p)
+
+    $(document).ready(function(){
+        $("#id_username").keyup(function(){
+            var username = $("#id_username");
+            username.val(username.val().toLowerCase())
+            var usernameValidation = $("#usernameValidation");
+            usernameValidation.css("font-size","0.8rem")
+            usernameValidation.css("margin-top","2px")
+            
+            let csr = $("input[name=csrfmiddlewaretoken").val();
+            var sendData = {
+                musername : username.val(),
+                csrfmiddlewaretoken:csr,
+            }
+            $.ajax({
+                url : "{% url 'check_user' %}",
+                method : 'POST',
+                data : sendData,
+                success : function(data){
+                    if(data.status){
+                        usernameValidation.text("not available")
+                        usernameValidation.css("color","red")
+                    }
+                    else{
+                        usernameValidation.text("available")
+                        usernameValidation.css("color","green")
+                    }
+                }
+            })
+
+        })
+        
+        
+    })
+</script>
+
+{% endblock script %}

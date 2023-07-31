@@ -1,0 +1,233 @@
+{% extends 'ContentUploader/base.html' %}
+{% load static %}
+{% block title %}
+Home
+{% endblock title %}
+
+
+{% block withoutcontainer %}
+<div class="chat-anim-btn">
+    <a href="https://wa.me/923214123882" target="_blank" style="z-index:100;">
+        <img src="{% static 'ContentUploader/images/whatsapp.png' %}" alt="" style="width: 70px;">
+    </a>
+</div>
+
+
+<section class="main-sec">
+    <div class="gradient"></div>
+
+    <video id="background-video" autoplay loop muted poster="https://assets.codepen.io/6093409/river.jpg" style="height:100%;">
+        <source src="{% static 'ContentUploader/images/background-vid.mp4' %}" type="video/mp4">
+    </video>
+    <div class="overlay">
+        <h1 class="display-6">A MOMENT OF PURE PRESTIGE</h1>
+        <p>LAVISH AND UNFORGETABLE EVENTS</p>
+        <form action="" method="GET" enctype="multipart/form-data">
+ 
+            <div class="container text-left px-4">
+                <div class="longsearch row longsear-divs">
+                    <div class="location showshadow col-md-3">
+                        <label for='location' class="form-label">Location or Venue name</label><br>
+                        <input type="text" placeholder="e.g Lahore" id='location' class="form-control border-0 px-0"
+                            required name="location">
+                    </div>
+                    <div class="checkin showshadow col-md-3">
+                        <label for='checkin' class="form-label">Check in</label><br>
+                        <input type="datetime-local" id='checkin' class="form-control border-0 px-0">
+                    </div>
+                    <div class="checkout showshadow col-md-3">
+                        <label for='checkout' class="form-label">Check out</label><br>
+                        <input type="datetime-local" id='checkout' class="form-control border-0 px-0">
+                    </div>
+                    <!-- <div class="guests showshadow col-md-3">
+                        <label for='guests' class="form-label">Hotel / Restaurant</label><br>
+                        <select class='custom-select border-0'>Select:
+                            <option value="2">Hotel</option>
+                            <option value="3">Restaurant</option>
+                        </select>
+                    </div> -->
+                    <div class="col-md-3 search-button pl-5">
+                        <button class="search-btn" type="submit">Check Availability</button>
+                    </div>
+
+
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+</section>
+
+
+
+<!-- Explore Nearby -->
+<section class="explore py-5 container-fluid text-center">
+    <h1 class="pb-5 text-center ex-title">Explore Nearby</h1>
+    <div class="outer-locals">
+        <div class="inner-locals">
+            <img src="{% static 'ContentUploader/images/badshahi-mosque-lahore.jpg' %}" alt="" class='img-local'>
+            <div class="local-overlay"></div>
+            <button class='loc-btn'><a target="_blank" href="{% url 'home' %}?location=Lahore" >Lahore</a></button>
+        </div>
+        <div class="inner-locals">
+            <img src="{% static 'ContentUploader/images/rawalpindi.jpg' %}" alt="" class='img-local'>
+            <div class="local-overlay"></div>
+            <button class='loc-btn'><a target="_blank" href="{% url 'home' %}?location=Karachi" >Karachi</a></button>
+        </div>
+        <div class="inner-locals">
+            <img src="{% static 'ContentUploader/images/karachi.jpg' %}" alt="" class='img-local'>
+            <div class="local-overlay"></div>
+            <button class='loc-btn'><a target="_blank" href="{% url 'home' %}?location=Rawalpindi" >Rawalpindi</a></button>
+        </div>
+        <div class="inner-locals">
+            <img src="{% static 'ContentUploader/images/rawalpindi.jpg' %}" alt="" class='img-local'>
+            <div class="local-overlay"></div>
+            <button class='loc-btn'><a target="_blank" href="{% url 'home' %}?location=Faisalabad" >Faisalabad</a></button>
+        </div>
+        <div class="inner-locals">
+            <img src="{% static 'ContentUploader/images/horse.jpg' %}" alt="" class='img-local'>
+            <div class="local-overlay"></div>
+            <button class='loc-btn'><a target="_blank" href="{% url 'home' %}?location=Gujaranwala" >Gujaranwala</a></button>
+        </div>
+        <div class="inner-locals">
+            <img src="{% static 'ContentUploader/images/faisalabad.jpg' %}" alt="" class='img-local'>
+            <div class="local-overlay"></div>
+            <button class='loc-btn'><a target="_blank" href="{% url 'home' %}?location=Islamabad" >Islamabad</a></button>
+        </div>
+        <div class="inner-locals">
+            <img src="{% static 'ContentUploader/images/badshahi-mosque-lahore.jpg' %}" alt="" class='img-local'>
+            <div class="local-overlay"></div>
+            <button class='loc-btn'><a target="_blank" href="{% url 'home' %}?location=Sheikhupura" >Sheikhupura</a></button>
+        </div>
+        <div class="inner-locals">
+            <img src="{% static 'ContentUploader/images/karachi.jpg' %}" alt="" class='img-local'>
+            <div class="local-overlay"></div>
+            <button class='loc-btn'><a target="_blank" href="{% url 'home' %}?location=Multan" >Multan</a></button>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+<!-- why choose us -->
+<section class="chooseus my-4 text-center py-5">
+    <h1 class="text-center ex-title">Why you Choose us!</h1>
+    <p class='pt-3 text-center'>Lorem ipsum dolor, sit amet consectetur adipisicing elit.<br> At aut nulla
+        nesciunt
+        quod? Dolore quod eius facere culpa!<bR> Modi, quos! Magnam libero reiciendis.</p>
+    <div class="container pt-5 text-center mx-auto">
+        <div class="row text-center">
+            <div class="col-md-4 text-center p-1">
+                <div class="border-3 py-3 px-2 mr-2">
+                    <img src="{% static 'ContentUploader/images/online-booking.png' %}" alt="" style="width: 70px;">
+                    <h5 class="py-3">Easy Booking</h5>
+                    <p style="font-size: 0.8rem;" class="px-3">Mannat.pk offers the best services in the most reasonable pricing which means you get the best
+                        for less! Quality of work is something we don’t compromise on.</p>
+                </div>
+            </div>
+            <div class="col-md-4 text-center p-1">
+                <div class="border-3 py-3 px-3 mr-2">
+                    <img src="{% static 'ContentUploader/images/add-friend.png' %}" alt="" style="width: 70px;">
+                    <h5 class="py-3">Service Assurance</h5>
+                    <p style="font-size: 0.8rem;" class="px-3">We promise you to provide the Venue best for you on your special day, so you should not worry about a thing and
+                        let us handle it for you!</p>
+                </div>
+            </div>
+            <div class="col-md-4 text-center p-1">
+                <div class="border-3 py-3 px-2 mx-1">
+                    <img src="{% static 'ContentUploader/images/package-delivered.png' %}" alt="" style="width: 70px;">
+                    <h5 class="py-3 px-2">Guaranteed Best Prices</h5>
+                    <p style="font-size: 0.8rem;" class="px-3">Mannat.pk offers the best services in the most reasonable pricing which means you get the best
+                        for less! Quality of work is something we don’t compromise on.</p>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+</section>
+{% endblock withoutcontainer %}
+
+
+{% block content %}
+<!-- Gallery -->
+<section class="gallery my-5">
+    <h1 class="text-center ex-title pb-5">Gallery</h1>
+    <div class="container">
+        <div class="row py-4 mygalley">
+            <div class="col-md-4 col-sm-6 col-xs-12 p-2">
+                <img class='w-100 h-100' src="{% static 'ContentUploader/images/badshahi-mosque-lahore.jpg'%}" alt="">
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12 p-2">
+                <img class='w-100 h-100' src="{% static 'ContentUploader/images/faisalabad.jpg'%}" alt="">
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12 p-2">
+                <img class='w-100 h-100' src="{% static 'ContentUploader/images/karachi.jpg'%}" alt="">
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12 p-2">
+                <img class='w-100 h-100' src="{% static 'ContentUploader/images/horse.jpg'%}" alt="">
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12 p-2">
+                <img class='w-100 h-100' src="{% static 'ContentUploader/images/karachi.jpg'%}" alt="">
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12 p-2">
+                <img class='w-100 h-100' src="{% static 'ContentUploader/images/rawalpindi.jpg'%}" alt="">
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- What our client say -->
+<section class="client-say my-5 py-5">
+    <h1 class="text-center ex-title">What Our Clients Say About Us</h1>
+    <div class="container">
+        <div class="row clients">
+            <div class="col-md-4 col-sm-6 col-xs-12 text-left p-5">
+                <i class="fas fa-quote-left fa-2x"></i>
+                <p class="py-3">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, nostrum ut?
+                    Quia
+                    ipsam ex possimus, suscipit nihil atque molestiae deserunt officia eius recusandae
+                    blanditiis
+                    sit. Voluptas deleniti obcaecati magnam amet?</p>
+                <i style="font-size: 0.85rem;font-weight: 600;">Muhammad Ali</i>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12 text-left p-5">
+                <i class="fas fa-quote-left fa-2x"></i>
+                <p class="py-3">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, nostrum ut?
+                    Quia
+                    ipsam ex possimus, suscipit nihil atque molestiae deserunt officia eius recusandae
+                    blanditiis
+                    sit. Voluptas deleniti obcaecati magnam amet?</p>
+                <i style="font-size: 0.85rem;font-weight: 600;">Hasnat Razzaq</i>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12 text-left p-5">
+                <i class="fas fa-quote-left fa-2x"></i>
+                <p class="py-3">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, nostrum ut?
+                    Quia
+                    ipsam ex possimus, suscipit nihil atque molestiae deserunt officia eius recusandae
+                    blanditiis
+                    sit. Voluptas deleniti obcaecati magnam amet?</p>
+                <i style="font-size: 0.85rem;font-weight: 600;">Ali Arshad</i>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+<section class='stay-intouch my-5 py-5'>
+    <h6 class="text-center">Stay In Touch</h6>
+    <h1 class="text-center ex-title">Join Our Newsletter</h1>
+    <div class="my-4 h-75 border flex stay-intouch-input">
+        <input type="email" name="" id="" placeholder="Enter Email" class="px-3 py-2 w-50">
+        <button>Join</button>
+    </div>
+</section>
+
+{% endblock content %}

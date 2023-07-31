@@ -1,0 +1,40 @@
+{% extends 'ContentUploader/base.html' %}
+{% block title %}
+Set Custom Booking
+{% endblock title %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+
+<style>
+    .custbookdivsparent{
+        justify-content : center;
+    }
+    .sm-cont{
+        width:380px;
+        height:250px;
+        border-radius: 10px;
+    }
+    .sm-cont:hover{
+        background-color: rgb(211, 226, 255);
+    }
+</style>
+
+<div class="container my-5">
+    <h2 class="text-center mt-4">Set Custom Booking</h2>
+    <div class="custbookdivsparent flex mt-3">
+        <div class="sm-cont mx-3 mb-5 mt-2 text-center p-5 border">
+            <h4 class="py-4">Exsisting Customer</h4>
+            <a href="{% url 'set_custom_booking_with_ecustomer' managerID %}" class="btn btn-primary">Set Booking</a>
+        </div>
+        <div class="sm-cont mx-3 mb-5 mt-2 text-center p-5 border">
+            <h4 class="py-4">New Customer</h4>
+            <a href="{% url 'set_custom_booking_with_ncustomer' managerID %}" class="btn btn-primary">Set Booking</a>
+        </div>
+
+    </div>
+
+
+</div>
+
+{% endblock content %}

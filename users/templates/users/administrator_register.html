@@ -1,0 +1,68 @@
+{% extends 'ContentUploader/base.html' %}
+{% block title %}
+Administrator Register
+{% endblock title %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="w-100">
+
+    <form action="" method="post" autocomplete="off">
+        {% csrf_token %}
+        <div class="p-3 my-5">
+            <legend class="border-bottom">Administrator Registration</legend>
+            {{ form|crispy }}
+            <button type="submit" class="btn btn-primary">Submit</button><br>
+
+            <small>Already Have an account ? <a href="{% url 'login' %}">Sign In</a></small>
+        </div>
+    </form>
+</div>
+
+
+{% endblock content %}
+
+
+{% block script %}
+
+<script>
+    var p = document.createElement("p")
+    p.setAttribute("id","usernameValidation")
+    $('#id_username').after(p)
+
+    $(document).ready(function(){
+        $("#id_username").keyup(function(){
+            var username = $("#id_username");
+            username.val(username.val().toLowerCase())
+            var usernameValidation = $("#usernameValidation");
+            usernameValidation.css("font-size","0.8rem")
+            usernameValidation.css("margin-top","2px")
+            
+            let csr = $("input[name=csrfmiddlewaretoken").val();
+            var sendData = {
+                musername : username.val(),
+                csrfmiddlewaretoken:csr,
+            }
+            $.ajax({
+                url : "{% url 'check_user' %}",
+                method : 'POST',
+                data : sendData,
+                success : function(data){
+                    if(data.status){
+                        usernameValidation.text("not available")
+                        usernameValidation.css("color","red")
+                    }
+                    else{
+                        usernameValidation.text("available")
+                        usernameValidation.css("color","green")
+                    }
+                }
+            })
+
+        })
+        
+        
+    })
+</script>
+
+{% endblock script %}
