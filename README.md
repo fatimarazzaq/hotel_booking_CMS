@@ -2,8 +2,8 @@
 
 ## Description
 
-Mannat.pk is Hotel and Marriage Halls Booking Management CMS7
-It model consists of 3 user type
+Mannat.pk is Hotel and Marriage Halls Booking Management CMS.
+Its model consists of 3 user type
 
 1. Customer
 2. Hall Manager
