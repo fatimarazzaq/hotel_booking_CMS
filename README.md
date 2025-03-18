@@ -1,4 +1,4 @@
-# My Django Portfolio Project
+# Hotel Booking CMS
 
 ## Description
 
